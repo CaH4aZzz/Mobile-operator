@@ -9,5 +9,4 @@ public class MobileOperatorApplication {
     public static void main(String[] args) {
         SpringApplication.run(MobileOperatorApplication.class, args);
     }
-
 }
