@@ -1,9 +1,12 @@
 package com.example.mobileoperator.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Data
 @Table(name = "cities")
 public class City {
 

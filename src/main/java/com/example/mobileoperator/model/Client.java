@@ -1,22 +1,21 @@
 package com.example.mobileoperator.model;
 
 import com.example.mobileoperator.converter.GenderConverter;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 @Getter
-@Setter
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "clients")
 public class Client {
 
@@ -33,18 +32,26 @@ public class Client {
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty
+    @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthday;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "gender")
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
-    @NotNull
-    @Column(name = "phone_number")
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set phoneNumber;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phone_number")
+    private Set<PhoneNumber> phoneNumber;
+
+    public Client(@NotEmpty String firstName, @NotEmpty String lastName, @NotNull Date birthday,
+                  @NotNull Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.phoneNumber = new HashSet<>();
+    }
 }

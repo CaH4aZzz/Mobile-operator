@@ -1,10 +1,12 @@
 package com.example.mobileoperator.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "calls")
 public class Call {
 
@@ -23,11 +25,11 @@ public class Call {
 
     @Column(name = "call_date")
     @Temporal(TemporalType.DATE)
-    private LocalDate callDate;
+    private Date callDate;
 
     @Column(name = "call_time")
     @Temporal(TemporalType.TIME)
-    private LocalTime callTime;
+    private Date callTime;
 
     @Column(name = "call_duration")
     private Long duration;
