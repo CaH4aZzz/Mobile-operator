@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Data
@@ -18,12 +18,11 @@ public class PhoneNumber {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @NotNull
-    @Pattern(regexp="([0-9])")
+    @NotEmpty
+    @Pattern(regexp = "([0-9])")
     @Column(name = "number", length = 12)
     private String number;
 }

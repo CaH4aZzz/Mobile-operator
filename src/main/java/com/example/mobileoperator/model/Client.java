@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table (name = "client")
+@Table(name = "clients")
 public class Client {
 
     @Id
@@ -25,22 +25,19 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
     @NotEmpty
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull
     @NotEmpty
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull
     @NotEmpty
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthday;
 
-    @NotNull
     @NotEmpty
     @Column(name = "gender")
     @Convert(converter = GenderConverter.class)

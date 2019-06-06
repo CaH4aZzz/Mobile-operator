@@ -8,7 +8,7 @@ public class GenderConverter implements AttributeConverter<Gender, Character> {
 
     @Override
     public Character convertToDatabaseColumn(Gender gender) {
-        if(gender == null){
+        if (gender == null) {
             return null;
         }
         return gender.getCode();
@@ -16,7 +16,7 @@ public class GenderConverter implements AttributeConverter<Gender, Character> {
 
     @Override
     public Gender convertToEntityAttribute(Character code) {
-        if(code == null){
+        if (code == null) {
             return null;
         }
         return Gender.fromCode(code);
