@@ -25,7 +25,7 @@ public class ClientController {
     private PhoneNumberService phoneNumberService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Client> newClient(@RequestBody Client newClient) {
+    public ResponseEntity<Client> addClient(@RequestBody Client newClient) {
 
         Client client = new Client();
         client.setFirstName(newClient.getFirstName());

@@ -30,4 +30,9 @@ public class ClientService {
     public Client add(Client client) {
         return repository.save(client);
     }
+
+    public Long getByNumber(String number){
+        log.info("in client service");
+        return repository.findByPhoneNumbersEquals(number).getId();
+    }
 }
