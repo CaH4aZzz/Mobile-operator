@@ -31,8 +31,5 @@ public class ClientService {
         return repository.save(client);
     }
 
-    public Long getByNumber(String number){
-        log.info("in client service");
-        return repository.findByPhoneNumbersEquals(number).getId();
-    }
+//    public
 }

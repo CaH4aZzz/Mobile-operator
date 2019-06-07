@@ -36,12 +36,4 @@ public class Call {
 
     public Call() {
     }
-
-    public Call(String phoneNumber, String recipientNumber, LocalDateTime callDate, Long duration, String city) {
-        this.phoneNumber = phoneNumber;
-        this.recipientNumber = recipientNumber;
-        this.callDate = callDate;
-        this.duration = duration;
-        this.city = city;
-    }
 }
