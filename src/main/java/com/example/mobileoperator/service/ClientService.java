@@ -19,7 +19,6 @@ public class ClientService {
     private ClientRepository repository;
 
     public List<Client> getAll() {
-        log.info("in " + this.toString());
         return repository.findAll();
     }
 
@@ -30,6 +29,4 @@ public class ClientService {
     public Client add(Client client) {
         return repository.save(client);
     }
-
-//    public
 }

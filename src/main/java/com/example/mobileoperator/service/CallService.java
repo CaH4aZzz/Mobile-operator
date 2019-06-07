@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -22,23 +24,21 @@ public class CallService {
         return repository.save(call);
     }
 
-    public List<Call> getAll(){
+    public List<Call> getAll() {
         return repository.findAll();
     }
 
-    public Map<String, Long> showCallPerEachCity(){
+    public Map<String, Long> getCallPerEachCity() {
         List<Object[]> list = repository.countByCity();
-
         Map<String, Long> map = new HashMap<>();
-        for(Object[] obj : list){
-            map.put((String)obj[0],(Long)obj[1]);
+        for (Object[] obj : list) {
+            map.put((String) obj[0], (Long) obj[1]);
         }
 
         return map;
     }
 
-    public void getLongestBetweenDates(Long id, LocalDate from, LocalDate to){
-        log.info("In service between dates");
-        System.out.println(repository.findByCallDateBetween(id, from, to));
+    public Call getLongestBetweenDates(Long id, LocalDate from, LocalDate to) {
+        return repository.findByCallDateBetween(id, from, to);
     }
 }

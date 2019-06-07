@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +29,6 @@ public class CallController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Call> addCall(@RequestBody Call inCall) {
         Call call = callService.add(inCall);
-
         if (call == null) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -39,20 +38,29 @@ public class CallController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Call>> getAllCalls() {
         List<Call> calls = callService.getAll();
+        if (calls == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(calls, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cities",method = RequestMethod.GET)
-    public ResponseEntity getCallsByCityName(){
-        return new ResponseEntity(callService.showCallPerEachCity(), HttpStatus.OK);
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
+    public ResponseEntity getCallsByCityName() {
+        Map<String, Long> callsByCities = callService.getCallPerEachCity();
+        if (callsByCities == null) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(callsByCities, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/{startDate}/{endDate}", method = RequestMethod.GET)
-    public ResponseEntity<Call> getLongestBetweenDates(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate){
+    public ResponseEntity<Call> getLongestBetweenDates(@PathVariable Long id, @PathVariable String startDate,
+                                                       @PathVariable String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate from = LocalDate.parse(startDate, formatter);
         LocalDate to = LocalDate.parse(endDate, formatter);
-        callService.getLongestBetweenDates(id, from, to);
-        return null;
+        Call call = callService.getLongestBetweenDates(id, from, to);
+
+        return new ResponseEntity<>(call, HttpStatus.OK);
     }
 }

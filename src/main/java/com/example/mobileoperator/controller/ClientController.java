@@ -40,7 +40,7 @@ public class ClientController {
             phoneNumberService.add(number);
         }
         client = clientService.add(client);
-        if (client == null){
+        if (client == null) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(client, HttpStatus.CREATED);
