@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -40,5 +40,19 @@ public class CallController {
     public ResponseEntity<List<Call>> getAllCalls() {
         List<Call> calls = callService.getAll();
         return new ResponseEntity<>(calls, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cities",method = RequestMethod.GET)
+    public ResponseEntity getCallsByCityName(){
+        return new ResponseEntity(callService.showCallPerEachCity(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/{startDate}/{endDate}", method = RequestMethod.GET)
+    public ResponseEntity<Call> getLongestBetweenDates(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate from = LocalDate.parse(startDate, formatter);
+        LocalDate to = LocalDate.parse(endDate, formatter);
+        callService.getLongestBetweenDates(id, from, to);
+        return null;
     }
 }

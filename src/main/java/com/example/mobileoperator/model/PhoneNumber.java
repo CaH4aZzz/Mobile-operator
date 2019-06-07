@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "phone_number")
+@Table(name = "phone_numbers")
 public class PhoneNumber {
 
     @Id

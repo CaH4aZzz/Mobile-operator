@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -26,7 +28,10 @@ public class Call {
     private String recipientNumber;
 
     @Column(name = "call_date")
-    private LocalDateTime callDate;
+    private LocalDate callDate;
+
+    @Column(name = "call_time")
+    private LocalTime callTime;
 
     @Column(name = "call_duration")
     private Long duration;
