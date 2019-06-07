@@ -15,7 +15,7 @@ public class PhoneNumberService {
 
     private PhoneNumberRepository repository;
 
-    public PhoneNumber add(PhoneNumber phoneNumber){
+    public PhoneNumber add(PhoneNumber phoneNumber) {
         return repository.save(phoneNumber);
     }
 }

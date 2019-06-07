@@ -1,21 +1,22 @@
 package com.example.mobileoperator.model;
 
 import com.example.mobileoperator.converter.GenderConverter;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 
 @Entity
-@Data
+@Setter
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "clients")
 public class Client {
 
@@ -42,16 +43,35 @@ public class Client {
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phone_number")
-    private Set<PhoneNumber> phoneNumber;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
-    public Client(@NotEmpty String firstName, @NotEmpty String lastName, @NotNull Date birthday,
-                  @NotNull Gender gender) {
+    public void addPhoneNumber(PhoneNumber phoneNumber) {
+        phoneNumbers.add(phoneNumber);
+        phoneNumber.setClient(this);
+    }
+
+    public Client(@NotEmpty String firstName, @NotEmpty String lastName,
+                  @NotNull Date birthday, @NotNull Gender gender, List<PhoneNumber> phoneNumbers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
-        this.phoneNumber = new HashSet<>();
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public Client() {
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", phoneNumbers=" + phoneNumbers.toString() +
+                '}';
     }
 }

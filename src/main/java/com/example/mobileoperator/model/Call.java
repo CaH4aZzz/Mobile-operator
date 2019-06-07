@@ -13,9 +13,9 @@ public class Call {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "client_id")
-    private Long clientId;
+//
+//    @Column(name = "client_id")
+//    private Long clientId;
 
     @Column(name = "client_number")
     private String phoneNumber;

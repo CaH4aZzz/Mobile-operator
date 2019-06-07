@@ -1,12 +1,13 @@
 package com.example.mobileoperator.controller;
 
 import com.example.mobileoperator.model.Client;
+import com.example.mobileoperator.model.PhoneNumber;
 import com.example.mobileoperator.service.ClientService;
+import com.example.mobileoperator.service.PhoneNumberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,30 +22,47 @@ import java.util.Optional;
 public class ClientController {
 
     private ClientService clientService;
+    private PhoneNumberService phoneNumberService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Client> newClient(@RequestBody Client newClient) {
-//        newClient.ge
-        Client client = clientService.add(newClient);
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
+
+        Client client = new Client();
+        client.setFirstName(newClient.getFirstName());
+        client.setLastName(newClient.getLastName());
+        client.setBirthday(newClient.getBirthday());
+        client.setGender(newClient.getGender());
+        clientService.add(client);
+
+        List<PhoneNumber> numbers = newClient.getPhoneNumbers();
+
+        for (PhoneNumber number : numbers) {
+            client.addPhoneNumber(number);
+            phoneNumberService.add(number);
+        }
+        client = clientService.add(client);
+        ResponseEntity<Client> responseEntity = new ResponseEntity<>(client, HttpStatus.CREATED);
+        System.out.println(responseEntity);
+        return responseEntity;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity <List<Client>> getAll(){
+    public ResponseEntity<List<Client>> getAll() {
         List<Client> clients = clientService.getAll();
-        if (clients == null){
+        if (clients == null) {
             return new ResponseEntity<>(clients, HttpStatus.NOT_FOUND);
         }
+        Client c = clients.get(0);
+        List<PhoneNumber> p = c.getPhoneNumbers();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Client> getOne(@PathVariable Long id){
+    public ResponseEntity<Client> getOne(@PathVariable Long id) {
         Optional<Client> client = clientService.getOneById(id);
-        if(!client.isPresent()){
+        if (!client.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             return new ResponseEntity(client, HttpStatus.OK);
         }
     }
