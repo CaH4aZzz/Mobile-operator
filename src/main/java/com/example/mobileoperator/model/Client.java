@@ -1,6 +1,7 @@
 package com.example.mobileoperator.model;
 
 import com.example.mobileoperator.converter.GenderConverter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class Client {
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 

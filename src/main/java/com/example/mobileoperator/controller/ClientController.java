@@ -35,15 +35,15 @@ public class ClientController {
         clientService.add(client);
 
         List<PhoneNumber> numbers = newClient.getPhoneNumbers();
-
         for (PhoneNumber number : numbers) {
             client.addPhoneNumber(number);
             phoneNumberService.add(number);
         }
         client = clientService.add(client);
-        ResponseEntity<Client> responseEntity = new ResponseEntity<>(client, HttpStatus.CREATED);
-        System.out.println(responseEntity);
-        return responseEntity;
+        if (client == null){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -52,8 +52,6 @@ public class ClientController {
         if (clients == null) {
             return new ResponseEntity<>(clients, HttpStatus.NOT_FOUND);
         }
-        Client c = clients.get(0);
-        List<PhoneNumber> p = c.getPhoneNumbers();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
