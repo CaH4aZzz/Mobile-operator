@@ -2,10 +2,6 @@ package com.example.mobileoperator.model;
 
 import com.example.mobileoperator.converter.GenderConverter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,9 +11,6 @@ import java.util.List;
 
 
 @Entity
-@Setter
-@Getter
-@AllArgsConstructor
 @Table(name = "clients")
 public class Client {
 
@@ -75,5 +68,10 @@ public class Client {
                 ", gender=" + gender +
                 ", phoneNumbers=" + phoneNumbers.toString() +
                 '}';
+    }
+
+    public void testMethodToBeUpdated(){
+        System.out.println("First string");
+        System.out.println("Second string");
     }
 }

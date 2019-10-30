@@ -3,9 +3,6 @@ package com.example.mobileoperator.controller;
 import com.example.mobileoperator.model.Call;
 import com.example.mobileoperator.service.CallService;
 import com.example.mobileoperator.service.ClientService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-@Data
-@AllArgsConstructor
+
 @RestController
-@Slf4j
 @RequestMapping(value = "/calls", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CallController {
 
